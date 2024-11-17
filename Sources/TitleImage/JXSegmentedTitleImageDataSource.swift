@@ -16,12 +16,17 @@ public enum JXSegmentedTitleImageType {
     case onlyImage
     case onlyTitle
     case backgroundImage
+    case rightTopImage
 }
 
 public typealias LoadImageClosure = ((UIImageView, String) -> Void)
 
 open class JXSegmentedTitleImageDataSource: JXSegmentedTitleDataSource {
     open var titleImageType: JXSegmentedTitleImageType = .rightImage
+    
+    /// imgView的默认位置是center在titleLabel的右上角，可以通过imgOffset控制X、Y轴的偏移
+    open var imgOffset: CGPoint = CGPoint.zero
+    
     /// 数量需要和item的数量保持一致。可以是ImageName或者图片网络地址
     open var normalImageInfos: [String]?
     /// 数量需要和item的数量保持一致。可以是ImageName或者图片网络地址。如果不赋值，选中时就不会处理图片切换。
@@ -48,6 +53,7 @@ open class JXSegmentedTitleImageDataSource: JXSegmentedTitleDataSource {
             return
         }
 
+        itemModel.imgOffset = imgOffset
         itemModel.titleImageType = titleImageType
         itemModel.normalImageInfo = normalImageInfos?[index]
         itemModel.selectedImageInfo = selectedImageInfos?[index]
@@ -68,7 +74,7 @@ open class JXSegmentedTitleImageDataSource: JXSegmentedTitleDataSource {
         var width = super.preferredSegmentedView(segmentedView, widthForItemAt: index)
         if itemWidth == JXSegmentedViewAutomaticDimension {
             switch titleImageType {
-            case .leftImage, .rightImage:
+            case .leftImage, .rightImage, .rightTopImage:
                 width += titleImageSpacing + imageSize.width
             case .topImage, .bottomImage:
                 width = max(width, imageSize.width)
@@ -86,7 +92,7 @@ open class JXSegmentedTitleImageDataSource: JXSegmentedTitleDataSource {
     public override func segmentedView(_ segmentedView: JXSegmentedView, widthForItemContentAt index: Int) -> CGFloat {
         var width = super.segmentedView(segmentedView, widthForItemContentAt: index)
         switch titleImageType {
-        case .leftImage, .rightImage:
+        case .leftImage, .rightImage, .rightTopImage:
             width += titleImageSpacing + imageSize.width
         case .topImage, .bottomImage:
             width = max(width, imageSize.width)

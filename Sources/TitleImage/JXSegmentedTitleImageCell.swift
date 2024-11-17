@@ -50,6 +50,11 @@ open class JXSegmentedTitleImageCell: JXSegmentedTitleCell {
             let contentWidth = imageSize.width + myItemModel.titleImageSpacing + titleLabel.bounds.size.width
             titleLabel.center = CGPoint(x: (contentView.bounds.size.width - contentWidth)/2 + titleLabel.bounds.size.width/2, y: contentView.bounds.size.height/2)
             imageView.center = CGPoint(x: titleLabel.frame.maxX + myItemModel.titleImageSpacing + imageSize.width/2, y: contentView.bounds.size.height/2)
+        // 自定义把图片移至右上角
+        case .rightTopImage:
+            let contentWidth = imageSize.width + myItemModel.titleImageSpacing + titleLabel.bounds.size.width
+            titleLabel.center = CGPoint(x: (contentView.bounds.size.width - contentWidth)/2 + titleLabel.bounds.size.width/2, y: contentView.bounds.size.height/2)
+            imageView.center = CGPoint(x: titleLabel.frame.maxX + myItemModel.titleImageSpacing + myItemModel.imgOffset.x, y: titleLabel.frame.minY + myItemModel.imgOffset.y)
         case .onlyImage:
             imageView.center = CGPoint(x: contentView.bounds.size.width/2, y: contentView.bounds.size.height/2)
         case .onlyTitle:
