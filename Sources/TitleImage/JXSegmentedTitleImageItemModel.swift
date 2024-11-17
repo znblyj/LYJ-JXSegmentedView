@@ -20,5 +20,5 @@ open class JXSegmentedTitleImageItemModel: JXSegmentedTitleItemModel {
     open var imageCurrentZoomScale: CGFloat = 0
     open var imageSelectedZoomScale: CGFloat = 0
     
-    open var imgOffset: CGPoint = CGPoint.zero
+    open var imgOffset: CGPoint = CGPoint.zero 
 }

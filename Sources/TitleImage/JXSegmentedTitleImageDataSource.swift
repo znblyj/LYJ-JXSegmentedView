@@ -16,7 +16,7 @@ public enum JXSegmentedTitleImageType {
     case onlyImage
     case onlyTitle
     case backgroundImage
-    case rightTopImage
+    case rightTopImage 
 }
 
 public typealias LoadImageClosure = ((UIImageView, String) -> Void)
