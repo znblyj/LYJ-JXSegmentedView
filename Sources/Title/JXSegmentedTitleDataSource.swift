@@ -37,6 +37,18 @@ open class JXSegmentedTitleDataSource: JXSegmentedBaseDataSource {
     open var titleSelectedStrokeWidth: CGFloat = -2
     /// title是否使用遮罩过渡
     open var isTitleMaskEnabled: Bool = false
+    
+    
+    // 自定义
+    open var titleMembers = [Bool]()
+    open var titleBackgroundColor: UIColor = .clear
+    open var titleNormalBackgroundColor: UIColor = .systemGray6
+    open var titleMemberBackgroundColor: UIColor = .yellow.withAlphaComponent(0.3)
+    open var isTitleTagEnabled: Bool = false
+    open var titleTagInsetWidth: CGFloat = 16
+    open var titleTagInsetHeight: CGFloat = 10
+    open var titleTagCornerRadius: CGFloat = 8
+    
 
     open override func preferredItemCount() -> Int {
         return titles.count
@@ -59,6 +71,21 @@ open class JXSegmentedTitleDataSource: JXSegmentedBaseDataSource {
         myItemModel.isSelectedAnimable = isSelectedAnimable
         myItemModel.titleNormalColor = innerTitleNormalColor(at: index)
         myItemModel.titleSelectedColor = innerTitleSelectedColor(at: index)
+        
+        
+        // 自定义
+        myItemModel.isTitleTagEnabled = isTitleTagEnabled
+        myItemModel.titleTagInsetWidth = titleTagInsetWidth
+        myItemModel.titleTagInsetHeight = titleTagInsetHeight
+        myItemModel.titleTagCornerRadius = titleTagCornerRadius
+        // 开启了标签模式才允许设置背景色, 否则为透明
+        if isTitleTagEnabled {
+            myItemModel.titleBackgroundColor = titleMembers[index] ? titleMemberBackgroundColor : titleNormalBackgroundColor
+        } else {
+            myItemModel.titleBackgroundColor = titleBackgroundColor
+        }
+        
+        
         myItemModel.titleNormalFont = innerTitleNormalFont(at: index)
         if let selectedFont = innerTitleSelectedFont(at: index) {
             myItemModel.titleSelectedFont = selectedFont

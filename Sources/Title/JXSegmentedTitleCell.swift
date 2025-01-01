@@ -33,14 +33,32 @@ open class JXSegmentedTitleCell: JXSegmentedBaseCell {
     open override func layoutSubviews() {
         super.layoutSubviews()
 
-        //为什么使用`sizeThatFits`，而不用`sizeToFit`呢？在numberOfLines大于0的时候，cell进行重用的时候通过`sizeToFit`，label设置成错误的size。至于原因我用尽毕生所学，没有找到为什么。但是用`sizeThatFits`可以规避掉这个问题。
-        let labelSize = titleLabel.sizeThatFits(self.contentView.bounds.size)
-        let labelBounds = CGRect(x: 0, y: 0, width: labelSize.width, height: labelSize.height)
-        titleLabel.bounds = labelBounds
-        titleLabel.center = contentView.center
+        // 获取Model的属性
+        guard let myItemModel = itemModel as? JXSegmentedTitleItemModel else {
+            return
+        }
 
-        maskTitleLabel.bounds = labelBounds
+        //为什么使用`sizeThatFits`，而不用`sizeToFit`呢？在numberOfLines大于0的时候，cell进行重用的时候通过`sizeToFit`，label设置成错误的size。至于原因我用尽毕生所学，没有找到为什么。但是用`sizeThatFits`可以规避掉这个问题。
+        if myItemModel.isTitleTagEnabled {
+            let labelSize = titleLabel.sizeThatFits(self.contentView.bounds.size)
+            let labelBounds = CGRect(x: 0, y: 0, width: labelSize.width + myItemModel.titleTagInsetWidth, height: labelSize.height + myItemModel.titleTagInsetHeight)
+            titleLabel.bounds = labelBounds
+            titleLabel.layer.masksToBounds = true
+            titleLabel.layer.cornerRadius = myItemModel.titleTagCornerRadius
+            
+            maskTitleLabel.bounds = labelBounds
+        } else {
+            let labelSize = titleLabel.sizeThatFits(self.contentView.bounds.size)
+            let labelBounds = CGRect(x: 0, y: 0, width: labelSize.width, height: labelSize.height)
+            titleLabel.bounds = labelBounds
+            
+            maskTitleLabel.bounds = labelBounds
+        }
+
+        titleLabel.backgroundColor = myItemModel.titleBackgroundColor
+        titleLabel.center = contentView.center
         maskTitleLabel.center = contentView.center
+        
     }
 
     open override func reloadData(itemModel: JXSegmentedBaseItemModel, selectedType: JXSegmentedViewItemSelectedType) {

@@ -26,4 +26,13 @@ open class JXSegmentedTitleItemModel: JXSegmentedBaseItemModel {
     open var titleSelectedStrokeWidth: CGFloat = 0
     open var isTitleMaskEnabled: Bool = false
     open var textWidth: CGFloat = 0
+    
+    // 自定义
+    open var titleBackgroundColor: UIColor = .clear
+    open var titleNormalBackgroundColor: UIColor = .systemGray6
+    open var titleMemberBackgroundColor: UIColor = .yellow.withAlphaComponent(0.3)
+    open var isTitleTagEnabled: Bool = false
+    open var titleTagInsetWidth: CGFloat = 16
+    open var titleTagInsetHeight: CGFloat = 10
+    open var titleTagCornerRadius: CGFloat = 8
 }
